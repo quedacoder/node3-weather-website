@@ -64,7 +64,15 @@ app.get("/weather", (req, res) => {
             latitude,
             longitude,
             "f",
-            (error, { weather_description, current_temp, feels_like } = {}) => {
+            (
+                error, {
+                    weather_description,
+                    current_temp,
+                    feels_like,
+                    cloudcover,
+                    visibility,
+                } = {}
+            ) => {
                 if (error) {
                     return res.send({
                         error: error,
@@ -79,6 +87,8 @@ app.get("/weather", (req, res) => {
                     " degrees out. It feels like " +
                     feels_like +
                     " degrees outside.";
+                cloudcoverMessage = "Current Cloudcover " + cloudcover + "%";
+                visibilityMessage = "Current Visibility " + visibility + "%";
 
                 res.send({
                     location: location,
@@ -87,6 +97,8 @@ app.get("/weather", (req, res) => {
                     message: {
                         location: currentLocation,
                         forecast: weatherMessage,
+                        cloudcover: cloudcoverMessage,
+                        visibility: visibilityMessage,
                     },
                 });
             }
